@@ -3,7 +3,7 @@
  * Plugin Name: Konora Paypal
  * Plugin URI: http://blog.konora.com/plugin/
  * Description: Personalizza il tuo pagamento con paypal
- * Version: 1.4
+ * Version: 1.6
  * Author: Konora ltd
  * Author URI: http://www.konora.com
  * License: GPLv2 or later
@@ -27,37 +27,34 @@
  * Aggiungere pubblicità a konora
  * Aggiungere konora come contributor
  * Problema con i caratteri utf accentati
+ * Il javascript fuinziona solo sulla prima riga!
+ * Pagamento con stripe
 
- * ## PHP Short Tags
 
-  The primary issue with PHP's short tags is that PHP managed to choose a tag (<?) that was used by another syntax, XML.
-
-  With the option enabled, you weren't able to raw output the xml declaration without getting syntax errors:
-
-  <?xml version="1.0" encoding="UTF-8" ?>
-
-  This is a big issue when you consider how common XML parsing and management is.
-
-  While as of PHP 5.4, <?= ... ?> tags are supported everywhere, regardless of short tags settings. 
- * This should mean they're safe to use in portable code but that does mean there's then a dependency on PHP 5.4+. 
- * If you want to support pre-5.4 and can't guarantee short tags, you'll still need to use <?php echo ... ?>.
-
-  At this time, we ask that no plugin use PHP short tags, for sanity.
-
-  <input type="text" name="kpp_importo_a2" value="<?= $kpp_importo_a2; ?>"/>
-
-  You're calling it there for the value.
  */
-$plugin = plugin_basename(__FILE__);
 
-define('PLUGIN_DIR', dirname(__FILE__) . '/');
-define('FILE_DIR', $upload_dir['baseurl']);
+//$plugin = plugin_basename(__FILE__);
+//define('PLUGIN_DIR', dirname(__FILE__) . '/');
+//define('FILE_DIR', $upload_dir['baseurl']);
+
 define('KPP_ICON', plugins_url('images/KPP.ico', __FILE__));
-
-register_activation_hook(__FILE__, 'kpp_install');
 
 add_action('admin_init', 'k_paypal_plugin_admin_init');
 add_action('admin_menu', 'k_paypal_add_page');
+
+function k_paypal_plugin_admin_init() {
+    /* Register our stylesheet. */
+    wp_register_style('k_paypal_PluginStylesheet', plugins_url('css/k-paypal-admin-style.css', __FILE__));
+    wp_register_style('fontawesome_min', plugins_url('css/font-awesome.min.css', __FILE__));
+    wp_register_style('fontawesome', plugins_url('css/font-awesome.css', __FILE__));
+    wp_register_style('invkp_css', plugins_url('css/invoicekingpro-styles.css', __FILE__));
+    wp_register_style('invkp_jquery_ui', plugins_url('css/jquery-ui.css', __FILE__));
+    wp_enqueue_script('query', plugins_url("js/jQuery.js", __FILE__), array(), '1.0.0', true);
+    //    $wnm_custom = array( 'template_url' => get_bloginfo('template_url') );
+    $query_url = plugins_url('konora-paypal.php', __FILE__);
+    $wnm_custom = array('template_url' => $query_url);
+    wp_localize_script('query', 'wnm_custom', $wnm_custom);
+}
 
 function k_paypal_add_page() {
     $k_paypal_page = add_menu_page('K Paypal', 'KPP', 'manage_options', 'k_paypal_options', 'kpp_option_help', KPP_ICON);
@@ -69,13 +66,14 @@ function k_paypal_plugin_admin_styles() {
     /*
      * It will be called only on your plugin admin page, enqueue our stylesheet here
      */
+    wp_enqueue_style('invkp_css');
     wp_enqueue_style('k_paypal_PluginStylesheet');
+    wp_enqueue_style('fontawesome_min');
+    wp_enqueue_style('fontawesome');
+    wp_enqueue_style('invkp_jquery_ui');
 }
 
-function k_paypal_plugin_admin_init() {
-    /* Register our stylesheet. */
-    wp_register_style('k_paypal_PluginStylesheet', plugins_url('css/k-paypal-admin-style.css', __FILE__));
-}
+register_activation_hook(__FILE__, 'kpp_install');
 
 function kpp_install() {
     $path = get_kpp_upload_folder('/kpp_files/');
@@ -109,10 +107,35 @@ function kpp_option_help() {
     ?>
     <div class="kpp_admin">
         <div class="title">
-            <h1 style="margin-left: 25%;">Crea il tuo file Paypal <em>v1.4</em></h1><h1 style="margin-left: 25%;"></h1>
+            <h1 style="margin-left: 25%;">Crea il tuo file Paypal <em>v1.6</em></h1><h1 style="margin-left: 25%;"></h1>
+        </div>
+
+        <div class="kpp_block filled">
+            <div class="kpp-list-group">
+                <h4>Trovato un problema? Posta il probelma sul 
+                    <a href="#" target="_blank">Forum di supporto</a>. Se preferisci, inviami un'email direttamente a 
+                    <a href="mailto:roberto@konora.com">roberto@konora.com</a>       
+<!--
+                    <a class="list-group-item" href="#"><i class="fa fa-home fa-fw"></i>&nbsp; Home</a>
+                    <a class="list-group-item" href="#"><i class="fa fa-book fa-fw"></i>&nbsp; Library</a>
+                    <a class="list-group-item" href="#"><i class="fa fa-pencil fa-fw"></i>&nbsp; Applications</a>
+                    <a class="list-group-item" href="#"><i class="fa fa-cog fa-fw"></i>&nbsp; Settings</a>
+-->
+                </h4>
+            </div>
         </div>
         <div class="logo">
-            <img width="46" src="<?php echo plugins_url('images/konora-logo-icona.png', __FILE__) ?>"/>
+            <div id="kpp_social">
+                <div class="kpp_social facebook"><a href="https://www.facebook.com/KonoraItalia?fref=ts" target="_blank">
+                        <i class="fa fa-facebook"></i> <span class="kpp_width"><span class="kpp_opacity">Facebook</span></span></a></div>
+                <div class="kpp_social linkedin"><a href="https://www.linkedin.com/company/konora" target="_blank">
+                        <i class="fa fa-linkedin"></i> <span class="kpp_width"><span class="kpp_opacity">Linkedin</span></span></a></div>
+                <div class="kpp_social google"><a href="https://plus.google.com/+Konora/videos" target="_blank">
+                        <i class="fa fa-google-plus"></i> <span class="kpp_width"><span class="kpp_opacity">Google+</span></span></a></div>
+                <div class="kpp_social konora"><a href="http://www.konora.com" target="_blank">
+                        <i class="fa fa-heart"></i> <span class="kpp_width"><span class="kpp_opacity">Konora</span></span></a></div>
+            </div>
+            <!--<img width="46" src="<?php // echo plugins_url('images/konora-logo-icona.png', __FILE__)        ?>"/>-->
         </div>
 
 
@@ -323,7 +346,7 @@ function kpp_option_help() {
                                                     <label for="kpp_return">Url pagina di ringraziamento </label>
                                                 </p>
                                                 <p class="right">
-                                                    <input type="text" name="kpp_return" value="<?php echo $kpp_return; ?>"/>
+                                                    <input type="text" name="kpp_return" value="<?php echo $kpp_return; ?>" required placeholder="Url thanks page"/>
                                                     <em>(Url della pagina a cui gli utenti ritornano dopo aver effettuato il pagamento)</em>
                                                 </p>
                                             </div>
@@ -479,13 +502,13 @@ function kpp_option_help() {
                                                     $_POST['k_paypal_create_btn'] = "";
                                                 } else {
                                                     $_POST['k_paypal_create_btn'] = "";
-                                                    echo '<div class="warning"><strong> <img class="icon" width="14" src="' . plugins_url('css/emotion_sad_icon&16.png', __FILE__) . '"/> Nessun file ancora creato</strong></div>';
+                                                    echo '<div class="warning"><i class="fa fa-exclamation-triangle fa-lg"></i> <strong>Nessun file ancora creato</strong></div>';
                                                 }
                                                 ?>
                                             </div>
                                         </div>
                                     </div>
-                                    <?php // submit_button();        ?>
+                                    <?php // submit_button();          ?>
                                 </form>
                                 <!--
                                                             <input type="hidden" name="shipping" value="1.00">
@@ -509,10 +532,16 @@ function kpp_option_help() {
                         <div class="animated  fadeInRight ">
                             "Con questo plugin puoi creare facilmente il tuo file .php per creare un link diretto a paypal per qualsiasi tuo servizio"
                             <br/><br/>
-                            Nasce principalmente per integrare i pagamenti paypal con i Circoli di Konora (Piattaforma di Digital Marketing).<br/>
-                            Nel tempo svilupperemo altre integrazioni con altri processori di pagamento oltre Paypal<br/>
-                            Per qualsiasi suggerimento puoi mandare un'email a roberto@konora.com
+                            Nasce principalmente per integrare i pagamenti paypal con i Circoli di Konora (Piattaforma di Digital Marketing).<br/><br/>
+                            Nel tempo svilupperemo altre integrazioni con altri processori di pagamento oltre Paypal<br/><br/>
+                            Per qualsiasi suggerimento puoi mandare un'email a roberto@konora.com<br/><br/>
                             Per avere informazioni sulla <a href="http://www.konora.com">Piattaforma Konora clicca qui</a>.</div>
+                        <div class="kpp_plugin">
+                            <img src="<?php echo plugins_url('images/kpp_akp.jpg', __FILE__); ?>" alt="Ad King Pro" />
+                            <span class="title_b">Konora</span>
+                            <span class="description">Digital Marketing</span>
+                            <span class="links"><a href="http://www.konora.com" class="thickbox" title="More information about Konora">SITO WEB</a></span>
+                        </div>
                     </div>
                 </li>
             </ul>
@@ -524,14 +553,14 @@ function kpp_option_help() {
 function scan_kpp_files() {
 
     /*
-     * Scansione delle directory per prelevare i form
-     *
-     *  genera la lista delle immagini da visualizzare
+     * Scansione delle directory dei file salvati
+     *  genera la lista dei file creati precedentemente
      * 
      */
 
-    echo '<br>Elenco dei file creati precedentemente su <em>' . $_SERVER['SERVER_NAME'] . '</em><br/><br/>';
-    ;
+    echo '<br>Elenco dei file creati precedentemente su <em>' . $_SERVER['SERVER_NAME'] . '</em><br/><br/>'
+    . '';
+
 
     echo '<div class="ElencoFiles">';
     echo '<div class="row">';
@@ -556,66 +585,59 @@ function scan_kpp_files() {
     echo '</div>';
 
     $upload_dir = wp_upload_dir();
-    $url = $upload_dir['url'] . '/kpp_files/';
+    $url = $upload_dir['url'] . '../../kpp_files/';
     $root = get_kpp_upload_folder('/kpp_files/');
 
     $style_forms = Array();
 
     if ($directory_handle = opendir($root)) {
 
-//Scorro l'oggetto fino a quando non è termnato cioè false
+        //Scorro l'oggetto fino a quando non è termnato cioè false
         $i = 0;
 
         while (($file = readdir($directory_handle)) !== false) {
 
-            $path = PLUGIN_DIR . 'files/' . $file;
+            $path = get_kpp_upload_folder('/kpp_files/') . $file;
 
             if ((!is_dir($path)) & ($file != ".") & ($file != "..")) {
-
 
                 list($name, $extension) = explode('.', $file);
 
                 if (($name != "") and ( $extension == "php")) {
 
-                    $file_url = plugins_url('files/' . $file, __FILE__);
-//                        $dominio = "http://127.0.0.1:4001/";
+                    $file_url = $upload_dir['url'] . '/../../kpp_files/' . $file;
 
-                    $dominio = $_SERVER['SERVER_NAME'];
+//                    $dominio = $_SERVER['SERVER_NAME'];
 
                     if (is_multisite()) {
-                        $wp_folder = "/wp-admin/network/";
+                        $wp_editor_link = network_admin_url();
                     } else {
-                        $wp_folder = "/wp-admin/";
+                        $wp_editor_link = admin_url();
                     }
-
-
-                    $sub_url = "plugin-editor.php?file=konora-paypal%2Ffiles%2F";
-                    $end_url = "&plugin=konora-paypal%2Fkonora-paypal.php";
+//                     echo '<br> $wp_editor_link => '.$wp_editor_link;
+//                    $sub_url = "plugin-editor.php?file=konora-paypal%2Ffiles%2F";
+//                    $end_url = "&plugin=konora-paypal%2Fkonora-paypal.php";
 
                     echo '<div class="row">';
                     echo '<div class="col col1">';
                     echo $i++;
                     echo '</div>';
                     echo '<div class="col col2">';
-                    echo '<img class="icon" width="14" src="' . plugins_url('css/coffe_cup_icon&16.png', __FILE__) . '"/> '
-                    . '>> <a href="' . $file_url . '">' . $file . '</a> ';
+                    echo '<a href="' . $file_url . '"> <i class="fa fa-file-text-o"></i> -- ' . $file . '</a> ';
                     echo '</div>';
                     echo '<div class="col col3">';
-                    echo '<a alt="link" href="' . $file_url . '"> <img alt="link" class="icon" width="14" src="' . plugins_url('css/link_icon&16.png', __FILE__) . '"/></a> ';
+                    echo '<a alt="link" href="' . $file_url . '"> <i class="fa fa-link fa-lg"></i></a><div class="image b">Tasto dx mouse,<br> copia link ;)</div> ';
                     echo '</div>';
                     echo '<div class="col col4">';
 //                      echo '<a alt="editor" href="http://' . $dominio . $wp_folder . $sub_url . $file . $end_url . '"> <img alt="editor" class="icon" width="14" src="'
-                    echo '<a alt="editor" href="#"> <img alt="editor" class="icon" width="14" src="'
-                    . '' . plugins_url('css/app_window_black_icon&16.png', __FILE__) . '"/></a><div class="image">Coming soon...</div>';
+                    echo '<a alt="editor" href="#"> <i class="fa fa-pencil-square-o fa-lg"></i></a><div class="image r">Coming soon...</div>';
                     echo '</div>';
                     echo '<div class="col col5">';
-                    echo '<a alt="editor" href="#"> <img alt="editor" class="icon" width="14" src="'
-                    . '' . plugins_url('css/clipboard_copy_icon&16.png', __FILE__) . '"/></a><div class="image">Coming soon...</div>';
+                    echo '<a alt="editor" href="#"> <div id="test"><div id="link">' . $file_url . '</div><i class="fa fa-files-o fa-lg"></i></div></a>';
                     echo '</div>';
                     echo '<div class="col col6">';
 
-                    echo '<a alt="editor" href="#"> <img alt="editor" class="icon" width="14" src="'
-                    . '' . plugins_url('css/delete_icon&16.png', __FILE__) . '"/></a><div class="image">Coming soon...</div>';
+                    echo '<a alt="editor" href="#"> <div id="delete"><div id="link">' . $file_url . '</div><i class="fa fa-times fa-lg"></i></a><div class="image r">Coming soon...</div>';
                     echo '</div>';
                     echo '</div>';
                 }
@@ -650,10 +672,9 @@ function check_file_exist($file_to_check) {
 
         while (($file = readdir($directory_handle)) !== false) {
 
-            $path = PLUGIN_DIR . 'files/' . $file;
+            $path = get_kpp_upload_folder('/kpp_files/') . $file;
 
             if ((!is_dir($path)) & ($file != ".") & ($file != "..")) {
-
 
                 list($name, $extension) = explode('.', $file);
 
@@ -681,24 +702,24 @@ function check_file_exist($file_to_check) {
 
 function k_paypal_create_btn() {
     $Error = "";
-    $kpp_nome_file =  sanitize_text_field($_POST['kpp_nome_file']);
-    $kpp_email_paypal =  sanitize_text_field($_POST['kpp_email_paypal']);
-    $kpp_nome_prodotto =  sanitize_text_field($_POST['kpp_nome_prodotto']);
-    $kpp_importo_a1 =  sanitize_text_field($_POST['kpp_importo_a1']);
-    $kpp_importo_a2 =  sanitize_text_field($_POST['kpp_importo_a2']);
-    $kpp_importo_a3 =  sanitize_text_field($_POST['kpp_importo_a3']);
-    $kpp_subscription_1 =  sanitize_text_field($_POST['kpp_subscription_1']);
+    $kpp_nome_file = sanitize_text_field($_POST['kpp_nome_file']);
+    $kpp_email_paypal = sanitize_text_field($_POST['kpp_email_paypal']);
+    $kpp_nome_prodotto = sanitize_text_field($_POST['kpp_nome_prodotto']);
+    $kpp_importo_a1 = sanitize_text_field($_POST['kpp_importo_a1']);
+    $kpp_importo_a2 = sanitize_text_field($_POST['kpp_importo_a2']);
+    $kpp_importo_a3 = sanitize_text_field($_POST['kpp_importo_a3']);
+    $kpp_subscription_1 = sanitize_text_field($_POST['kpp_subscription_1']);
 
 //    $kpp_shipping = $_POST['kpp_shipping'];
-    $kpp_iva =  sanitize_text_field($_POST['kpp_iva']);
+    $kpp_iva = sanitize_text_field($_POST['kpp_iva']);
 
-    $kpp_cancel_return =  sanitize_text_field($_POST['kpp_cancel_return']);
-    $kpp_return =  sanitize_text_field($_POST['kpp_return']);
+    $kpp_cancel_return = sanitize_text_field($_POST['kpp_cancel_return']);
+    $kpp_return = sanitize_text_field($_POST['kpp_return']);
 
-    $kpp_circle =  sanitize_text_field($_POST['kpp_circle']);
-    $kpp_user =  sanitize_text_field($_POST['kpp_user']);
-    $kpp_service =  sanitize_text_field($_POST['kpp_service']);
-    $kpp_tipo =  sanitize_text_field($_POST['kpp_tipo']);
+    $kpp_circle = sanitize_text_field($_POST['kpp_circle']);
+    $kpp_user = sanitize_text_field($_POST['kpp_user']);
+    $kpp_service = sanitize_text_field($_POST['kpp_service']);
+    $kpp_tipo = sanitize_text_field($_POST['kpp_tipo']);
 
 //    $path = plugin_dir_path(__FILE__) . 'files/';
     $upload_dir = wp_upload_dir();
@@ -707,7 +728,7 @@ function k_paypal_create_btn() {
 
     $file_url = $url . $kpp_nome_file . '.php';
 
-    echo '<img width="16" src="' . plugins_url('css/cog_icon&16.png', __FILE__) . '"/> Creazione file in corso.. ';
+    echo '<i class="fa fa-cog fa-spin"></i> Creazione file in corso.. ';
 
     if (check_file_exist($kpp_nome_file)) {
         
@@ -814,8 +835,8 @@ function k_paypal_create_btn() {
                 . "<input type=\"hidden\" name=\"custom\" id=\"custom\" "
                 . "value=\"user=" . $kpp_user . ";"
                 . "circle_code=" . $kpp_circle . ";"
-                . "sponsor=" . "<?php echo\$_COOKIE['sponsor'];?>" . ";"
-                . "email=" . "<?php echo\$_COOKIE['email'];?>" . ";"
+                . "sponsor=" . "<?php echo \$_COOKIE['sponsor'];?>" . ";"
+                . "email=" . "<?php echo \$_COOKIE['email'];?>" . ";"
                 . "service=" . $kpp_service . ";"
                 . "tipo=" . $kpp_tipo . ""
                 . ""
@@ -845,15 +866,37 @@ function k_paypal_create_btn() {
 
 
         if ($Error != "") {
-            echo '<div class="errore">'
+            echo '<div class="errore"><i class="fa fa-frown-o fa-lg"></i>'
             . '<br>Sono stati riscontrati i seguenti errori nella creazione del FILE'
             . '<br><br>' . $Error . '</div>';
         }
 
-        echo '<div class="info"><strong><img class="icon" width="14" src="' . plugins_url('css/emotion_smile_icon&16', __FILE__) . '"/> Il file è stato creato</strong>';
+        echo '<div class="info"><i class="fa fa-info fa-lg"></i><strong> Il file è stato creato</strong>';
         echo ' => ' . $kpp_nome_file . '.php ' . ' <a href="' . $file_url . '">(LINK) </a> '
         . '<a href="' . $dominio . $wp_folder . $sub_url . $kpp_nome_file . ".php" . $end_url . '"> (Editor)</a>';
         echo '</div>';
+//        echo '<script language="javascript">';
+//        echo 'window.location.reload()';
+//        echo '</script>';
     }
+}
+
+function delete_file() {
+
+    /*
+     * http://stackoverflow.com/questions/20738329/how-to-call-a-php-function-on-the-click-of-a-button
+     */
+
+    echo '<br> delete file...';
+
+//        $fileArray = $files;
+//
+//        foreach ($fileArray as $value) {
+//            if (file_exists($value) and ($value == $file)) {
+//                unlink($value);
+//            } else {
+//                // code when file not found
+//            }
+//        }
 }
 ?>

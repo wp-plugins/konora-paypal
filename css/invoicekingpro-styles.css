@@ -1,0 +1,372 @@
+/***** Invoice Edit Styling *****/
+
+#postinvoicedatadiv {
+    margin-top: -80px !important;
+    background: #fff;
+    background-image: none;
+    overflow: hidden;
+    padding-bottom: 20px;
+}
+
+#postinvoicedatadiv > .handlediv, #postinvoicedatadiv > h3 {
+    display: none;
+}
+
+#invkp_invoice.default {
+    background: #fff;
+    margin: 5px;
+    padding: 10px;
+}
+
+#invkp_invoice.default div {overflow: hidden;}
+
+#invkp_invoice.default input[type=text] {
+    border: 0;
+    background: transparent;
+    margin: 0;
+    padding: 0 0 0 5px;
+    width: 100%;
+}
+
+#invkp_invoice input[type=text] {width: 100%;}
+
+#invkp_invoice.default textarea {
+    border: 0;
+    background: transparent;
+    margin: 0;
+    padding: 5px;
+    width: 100%;
+    resize: none;
+}
+
+#invkp_invoice.default input[type=text]:focus, #invkp_invoice.default textarea:focus {
+    background: #F9FAC6;
+}
+
+#invkp_invoice.default input[type=text].h1 {
+    font-size: 35px;
+    font-weight: bold;
+    height: 50px;
+    margin-bottom: 0;
+    text-align: right;
+    text-transform: uppercase;
+    float: right;
+    line-height: 50px;
+    padding: 0 5px 0 0;
+}
+
+#invkp_invoice.default input[type=text].h2 {
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 50px;
+    height: 50px;
+}
+
+#invkp_invoice.default input[type=text].h3 {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 24px;
+    height: 24px;
+}
+
+#invkp_invoice.default .inv_details_2 {margin-top: 20px;}
+
+#invkp_invoice.default .inv_address, #invkp_invoice.default .inv_contact {
+    float: left;
+    width: 49%;
+}
+
+#invkp_invoice.default .inv_numbers, #invkp_invoice.default .inv_client {
+    text-align: right;
+    float: right;
+    width: 49%;
+}
+
+#invkp_invoice.default .inv_numbers input[type=text], #invkp_invoice.default .inv_client input[type=text] {
+    text-align: right;
+    padding: 0 5px 0 0;
+}
+
+#invkp_invoice.default .inv_content_1 {margin-top: 20px;border-top: 1px solid #ccc; padding-top: 20px;}
+
+#invkp_invoice.default .inv_columns {margin-top: 20px;}
+
+#invkp_invoice.default .inv_columns table.styled {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-collapse: collapse;
+}
+
+#invkp_invoice.default .inv_columns table.styled th {
+    background: #ccc;
+}
+
+#invkp_invoice.default .inv_columns table.styled tbody tr:nth-child(even) {
+    background: #eee;
+}
+
+#invkp_invoice.default .inv_columns table.styled tbody td {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    position: relative;
+}
+
+#invkp_invoice .inv_columns table.styled tbody td {
+    position: relative;
+}
+
+#invkp_invoice.default .inv_content_2 {
+    margin-top: 20px;
+}
+
+.remove_invkp_column, .remove_invkp_row, .invkp_invoice_attachments_remove_file {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    overflow: hidden;
+    text-indent: -9999em;
+    background: url(../images/cross.png) no-repeat;
+    cursor: pointer;
+}
+
+.remove_invkp_row {position: absolute; right: 0; top: 50%; margin-top: -8px;}
+
+.invkp_invoice_attachments_remove_file {vertical-align: middle;}
+#invkp_invoice_attachments_output {margin-top: 20px;}
+
+.remove_invkp_column {
+    position: relative;
+    top: 5px;
+}
+
+.add_invkp_column, .add_invkp_row {
+    display: inline-block;
+    height: 16px;
+    background: url(../images/plus.png) no-repeat;
+    padding-left: 20px;
+    line-height: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#invkp_invoice.default .inv_columns tbody td .remove_invkp_row {float: right;}
+
+#postinvoiceoptionsdatadiv .invkp_datepicker {width: 100px;}
+
+#postinvoiceclientdatadiv {position: relative;}
+#postinvoiceclientdatadiv .saved_client {position: absolute; top: 0; left: 0; width: 100%; height: 100%; background:#999; text-align: center; line-height: 500px; font-size: 20px; color: #fff; font-weight: bold; display: none;}
+
+/***** Client Edit Styling *****/
+
+#postclientdatadiv {
+    margin-top: -80px;
+    overflow: hidden;
+    padding-bottom: 20px;
+}
+
+#postclientdatadiv .left {
+    float: left;
+    clear: left;
+    width: 49%;
+}
+
+#postclientdatadiv .right {
+    float: right;
+    width: 49%;
+}
+
+#postclientdatadiv label {
+    font-weight: bold;
+}
+
+#postclientdatadiv input[type=text] {
+    width: 100%;
+    margin-bottom: 10px;
+    height: 30px;
+}
+
+/***** Settings Area Styling *****/
+
+.invkp_tabs {
+    margin-top: -20px;
+    height: 33px;
+}
+
+.invkp_tabs a {
+    padding: 0 15px;
+    font-size: 18px;
+    height: 32px;
+    line-height: 32px;
+    display: inline-block;
+    float: left;
+    border: 1px solid #aaa;
+    border-top: none;
+    background: #ccc;
+    color: #666;
+    margin-right: 2px;
+    position: relative;
+    cursor: pointer;
+    font-family: "HelveticaNeue-Light","Helvetica Neue Light","Helvetica Neue",sans-serif;
+}
+
+.invkp_tabs a.active, .invkp_tabs a:hover {
+    top: -1px;
+    background: #efefef;
+    border: 1px solid #ccc;
+    border-top: none;
+}
+
+.wrap div.error.invkp_notice, .wrap div.updated.invkp_notice {
+    margin: 25px 0 5px;
+    clear: both;
+}
+
+.invkp_sections div.invkp_section {
+    width: 0%;
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+    -webkit-transition: opacity 0.5s ease;
+    -moz-transition: opacity 0.5s ease;
+    -ms-transition: opacity 0.5s ease;
+    -o-transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease;
+}
+
+.invkp_sections div.invkp_section.active {
+    width: 90%;
+    height: auto;
+    opacity: 1;
+    padding: 20px 0;
+}
+
+.invkp_sections .form-table tr:nth-child(even) {
+    background: #eee;
+}
+
+.invkp_sections .button-primary {margin: 20px 0;}
+
+/***** KPP Page *****/
+
+.kpp_block.filled {
+  padding: 0px 10px;
+  border: 1px solid #ccc;
+  background: #efefef;
+  margin: 5px 35px 0 0;
+}
+
+.kpp_plugin, .kpp_item {
+    border: 1px solid #ccc;
+    background: #efefef;
+    width: 285px;
+    margin: 0 20px 20px 0;
+    text-align: center;
+    /*border-top-left-radius: 16px;*/
+    /*border-bottom-right-radius: 16px;*/
+    overflow: hidden;
+    float: left;
+    padding-bottom: 20px;
+    opacity: 0.9;
+    -webkit-transition: box-shadow 0.5s ease, background 0.5s ease, border 0.5s ease, opacity 0.5s ease;
+    -moz-transition: box-shadow 0.5s ease, background 0.5s ease, border 0.5s ease, opacity 0.5s ease;
+    -ms-transition: box-shadow 0.5s ease, background 0.5s ease, border 0.5s ease, opacity 0.5s ease;
+    -o-transition: box-shadow 0.5s ease, background 0.5s ease, border 0.5s ease, opacity 0.5s ease;
+    transition: box-shadow 0.5s ease, background 0.5s ease, border 0.5s ease, opacity 0.5s ease;
+}
+
+.kpp_plugin:hover, .kpp_item:hover {
+    box-shadow: 0 0 18px -5px #333;
+    border: 1px solid #999;
+    opacity: 1;
+}
+
+.kpp_plugin img, .kpp_item img {width: 100%;}
+
+.kpp_plugin .title_b, .kpp_item .title_b {
+    font-size: 20px;
+    display: block;
+    line-height: 25px;
+    margin-top: 10px;
+}
+
+.kpp_plugin .description, .kpp_item .description {
+    display: block;
+    padding: 10px 20px;
+}
+
+.kpp_plugin .links a, .kpp_item .links a {
+    display: inline-block;
+    padding: 0 30px;
+    height: 35px;
+    line-height: 35px;
+    border: 1px solid #ccc;
+    border-top-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    background-color: #999;
+    color: #eee;
+    text-decoration: none;
+    font-size: 16px;
+    -webkit-transition: box-shadow 0.5s ease, background 0.5s ease, border 0.5s ease;
+    -moz-transition: box-shadow 0.5s ease, background 0.5s ease, border 0.5s ease;
+    -ms-transition: box-shadow 0.5s ease, background 0.5s ease, border 0.5s ease;
+    -o-transition: box-shadow 0.5s ease, background 0.5s ease, border 0.5s ease;
+    transition: box-shadow 0.5s ease, background 0.5s ease, border 0.5s ease;
+}
+
+.kpp_plugin:hover .links a, .kpp_item:hover .links a {border: 1px solid #666;}
+.kpp_plugin .links a:hover, .kpp_item .links a:hover {background: #3883A5; box-shadow: 0 0 18px -5px #333;}
+
+#kpp_social {display: block; overflow: hidden;}
+
+#kpp_social .kpp_social {
+    width: 120px; 
+    height: 40px; 
+    line-height: 40px;
+    text-align: center;
+    border-top-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+    float: left;
+    margin: 0 10px 10px 0;
+    font-size: 20px;
+}
+
+#kpp_social .kpp_social.facebook {background: #46629E;}
+#kpp_social .kpp_social.twitter {background: #27B6F2;}
+#kpp_social .kpp_social.linkedin {background: #007bb6;}
+#kpp_social .kpp_social.google {background: #CE352C;}
+#kpp_social .kpp_social.konora {background: #f68b1f;}
+
+
+#kpp_social .kpp_social a {display: block; width: 100%; height: 100%; color: #fff; text-decoration: none; font-weight: bold;}
+
+#kpp_social .kpp_social a span.kpp_width {
+    width: 0px;
+    display: inline-block;
+    -webkit-transition: width 0.5s ease;
+    -moz-transition: width 0.5s ease;
+    -ms-transition: width 0.5s ease;
+    -o-transition: width 0.5s ease;
+    transition: width 0.5s ease;
+}
+
+#kpp_social .kpp_social a:hover span.kpp_width {
+    width: 90px;
+}
+
+#kpp_social .kpp_social a span.kpp_opacity {
+    opacity: 0;
+    -webkit-transition-delay: 1s;
+    -moz-transition-delay: 1s;
+    -ms-transition-delay: 1s;
+    -o-transition-delay: 1s;
+    transition-delay: 1s;
+    -webkit-transition: opacity 0.5s ease;
+    -moz-transition: opacity 0.5s ease;
+    -ms-transition: opacity 0.5s ease;
+    -o-transition: opacity 0.5s ease;
+    transition: opacity 0.5s ease;
+}
+
+#kpp_social .kpp_social a:hover span.kpp_opacity {
+    opacity: 1;
+}
