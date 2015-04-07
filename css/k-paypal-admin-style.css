@@ -1,0 +1,331 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 6-mar-2015, 10.50.58
+    Author     : r
+*/
+
+.title {
+    color: #00529B;
+}
+
+.logo {
+    position: absolute;
+    right: 30px;
+    top: 15px;
+}
+
+/*
+* Message
+*/
+
+.info, .success, .warning, .errore, .title {
+    border: 1px solid;
+    margin: 5px 0px;
+    padding: 5px 25px;
+    background-repeat: no-repeat;
+    background-position: 5px center;
+    width: 53%;
+
+}
+
+.info {
+    color: #00529B;
+    background-color: #BDE5F8;
+    background-image: url('info.png');
+}
+.success {
+    color: #4F8A10;
+    background-color: #DFF2BF;
+    background-image: url('success.png');
+}
+.warning {
+    color: #9F6000;
+    background-color: #FEEFB3;
+    background-image: url('warning.png');
+}
+.errore {
+    color: #D8000C;
+    background-color: #FFBABA;
+    background-image: url('error.png');
+}
+.kpp_admin p {
+    width: 100%;
+}
+
+.kpp_admin p {
+    font-size: 12px;
+    line-height: 1.0;
+    margin: 3px;
+}
+
+.kpp_admin .left {
+    float: left;
+    position: relative;
+    top: -5px;
+    width: 15%;
+    height: 25px;
+}
+
+.kpp_admin .right {
+
+    margin-left: 180px;
+    width: 80%;
+
+}
+.kpp_admin .right em {
+    font-size: 12px;
+    text-shadow: 0 2px 3px #ccc;
+}
+
+.kpp_admin .icon {
+    margin-left: 2px;
+}
+input:required:invalid, input:focus:invalid {
+    background-image: url('warning.png');
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+input:required:valid {
+    background-image: url('success.png');
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+
+input[type="color"], input[type="date"], input[type="datetime-local"], 
+input[type="datetime"], input[type="email"], input[type="month"], input[type="number"], 
+input[type="password"],  input[type="search"], input[type="tel"], 
+input[type="text"], input[type="time"], input[type="url"], input[type="week"], select, textarea {
+    width: 220px;
+}
+
+input[type="checkbox"] {
+
+}
+
+#payment_radio {
+    /*width: 50px;*/
+    position: relative;
+    top: 0px;
+    left: 1px;
+}
+
+input[type="text"]::-webkit-input-placeholder {
+    font-size: 12px;
+    font: Tahoma, Helvetica, Arial, Sans-Serif;
+    color: #222;
+    text-shadow: 0px 2px 3px #555;
+}
+
+input[type="text"]:-moz-placeholder { /* Firefox 18- */
+    font-size: 12px;
+    font: Tahoma, Helvetica, Arial, Sans-Serif;
+    color: #222;
+    text-shadow: 0px 2px 3px #555;
+}
+
+input[type="text"]::-moz-placeholder {  /* Firefox 19+ */
+    font-size: 12px;
+    font: Tahoma, Helvetica, Arial, Sans-Serif;
+    color: #222;
+    text-shadow: 0px 2px 3px #555;
+}
+
+input[type="text"]:-ms-input-placeholder {  
+
+    font-size: 12px;
+    font: Tahoma, Helvetica, Arial, Sans-Serif;
+    color: #222;
+    text-shadow: 0px 2px 3px #555;
+}
+
+#crea_file{
+    /*float: left;*/
+}
+
+.submit {
+    margin: 10px;
+    padding: 10px;
+}
+
+.Config_box {
+    float: left;
+    width: 100%;
+}
+
+.Config_box_item {
+    float: left;
+    width: 100%;
+}
+
+.Config_box_item2 {
+    float: left;
+    width: 100%;
+}
+
+
+
+body, html {
+    /*height: 100%;*/
+    /*margin: 0;*/
+    /*-webkit-font-smoothing: antialiased;*/
+    /*font-weight: 100;*/
+    /*background: #EBD6AA;*/
+    /*text-align: center;*/
+    /*font-family: helvetica;*/
+}
+
+.tabs input[type=radio] {
+    position: absolute;
+    top: -9999px;
+    left: -9999px;
+}
+.tabs {
+    width: 99%;
+    float: none;
+    list-style: none;
+    position: relative;
+    padding: 0;
+    /*margin: 1% auto;*/
+}
+.tabs li{
+    float: left;
+}
+.tabs label {
+    display: block;
+    padding: 10px 20px;
+    border-radius: 2px 2px 0 0;
+    /*color: #CC6200;*/
+    /*    font-size: 24px;
+        font-weight: normal;
+        font-family: 'Roboto', helveti;*/
+    background: rgba(255,255,255,0.2);
+    cursor: pointer;
+    position: relative;
+    top: 3px;
+    -webkit-transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+.tabs label:hover {
+    background: rgba(255,255,255,0.5);
+    top: 0;
+}
+
+[id^=tab]:checked + label {
+    background: #00529B;
+    color: white;
+    top: 0;
+}
+
+[id^=tab]:checked ~ [id^=tab-content], [id^=tab]:checked ~ [id^=tab-content] > div {
+    display: inline-block;
+}
+.tab-content{
+    z-index: 2;
+    display: none;
+    text-align: left;
+    overflow: hidden;
+    width: 100%;
+    /*font-size: 20px;*/
+    line-height: 140%;
+    padding-top: 10px;
+    background: #f4f6ff;
+    padding: 15px;
+    /*color: white;*/
+    position: absolute;
+    top: 53px;
+    left: 0;
+    box-sizing: border-box;
+}
+.tab-content > div{
+    display: none;
+    -webkit-animation-duration: 0.5s;
+    -o-animation-duration: 0.5s;
+    -moz-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+}
+
+.ElencoFiles {
+    width: 80%
+}
+.row {
+    float: left;
+    width: 100%; 
+}
+.col {
+    border: 1px solid;
+    float: left;
+    margin: 1px;
+    /*padding: 5px;*/
+}
+.col1 {
+    float: left;
+    min-width: 15px;
+    padding: 15px;
+    text-align: center;
+}
+
+.col2 {
+    float: left;
+    margin-left: 10px;
+    min-width: 380px;
+    padding: 15px;
+    text-align: -moz-left;
+}
+
+.col3 {
+    float: left;
+    margin-left: 10px;
+    min-width: 60px;
+    padding: 15px;
+    text-align: center;
+}
+
+.col4 {
+    float: left;
+    margin-left: 10px;
+    min-width: 60px;
+    padding: 15px;
+    text-align: center;
+}
+
+.col5 {
+    float: left;
+    margin-left: 10px;
+    min-width: 60px;
+    padding: 15px;
+    text-align: center;
+}
+
+.col6 {
+    float: left;
+    margin-left: 10px;
+    min-width: 65px;
+    padding: 15px;
+    text-align: center;
+}
+
+.image
+{
+    display: none;
+    border:1px solid #000;
+    height:15px;
+    width:150px;
+    margin-left:3px;
+    position: absolute;
+    border: none;
+    font-size: 12px;
+    text-shadow: 0 2px 3px #ccc;
+    color: #e50000;
+    font-weight: 600;
+}
+
+a:hover + .image {
+    display: block;
+}​
+
